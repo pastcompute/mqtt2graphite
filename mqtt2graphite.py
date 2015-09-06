@@ -11,6 +11,7 @@ import time
 import socket
 import json
 import signal
+import csv
 
 MQTT_HOST = os.environ.get('MQTT_HOST', 'localhost')
 CARBON_SERVER = '127.0.0.1'
@@ -100,6 +101,25 @@ def on_message(mosq, userdata, msg):
                             lines.append("%s.%s %f %d" % (carbonkey, k, float(st[k]), now))
                 except:
                     logging.info("Topic %s contains non-JSON payload [%s]" %
+                            (msg.topic, msg.payload))
+                    return
+
+            elif type == 'v':
+                '''CSV: try and load the CSV string from payload and use
+                   offsets as subkeys to pass to Carbon'''
+                try:
+										csvr = csv.reader([msg.payload]) # one row is expected though
+										for row in csvr:
+										    # probably a more pythonic way but who cares
+										    n=0
+										    for cell in row:
+										      try:
+										        lines.append("%s.%s %f %d" % (carbonkey, n, float(cell), now))
+										      except:
+										        pass # ignore bad float conversions
+										      n = n + 1
+                except:
+                    logging.info("Topic %s contains non-parseable CSV payload [%s]" %
                             (msg.topic, msg.payload))
                     return
 
