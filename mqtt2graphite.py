@@ -25,7 +25,7 @@ if DEBUG:
 else:
     logging.basicConfig(level=logging.INFO, format=LOGFORMAT)
 
-client_id = "MQTT2Graphite_%d-%s" % (os.getpid(), socket.getfqdn())
+client_id = ("MQTT2Graphite_%d-%s" % (os.getpid(), socket.getfqdn()))[:23]
 
 def cleanup(signum, frame):
     '''Disconnect cleanly on SIGTERM or SIGINT'''
