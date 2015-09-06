@@ -142,6 +142,10 @@ def on_disconnect(mosq, userdata, rc):
         logging.info("Unexpected disconnect (rc %s); reconnecting in 5 seconds" % rc)
         time.sleep(5)
 
+def on_log(client, userdata, level, buf):
+  sys.stderr.write(buf)
+  sys.stderr.write("\n")
+
 if __name__ == '__main__':
     
 
@@ -185,6 +189,7 @@ if __name__ == '__main__':
     mqttc.on_connect = on_connect
     mqttc.on_disconnect = on_disconnect
     mqttc.on_subscribe = on_subscribe
+    mqttc.on_log = on_log
 
     # mqttc.will_set("clients/" + client_id, payload="Adios!", qos=0, retain=False)
 
