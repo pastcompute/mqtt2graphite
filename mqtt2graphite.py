@@ -30,7 +30,7 @@ client_id = ("MQTT2Graphite_%d-%s" % (os.getpid(), socket.getfqdn()))[:23]
 def cleanup(signum, frame):
     '''Disconnect cleanly on SIGTERM or SIGINT'''
 
-    mqttc.publish("/clients/" + client_id, "Offline")
+    # mqttc.publish("/clients/" + client_id, "Offline")
     mqttc.disconnect()
     logging.info("Disconnected from broker; exiting on signal %d", signum)
     sys.exit(signum)
@@ -49,7 +49,7 @@ def is_number(s):
 def on_connect(mosq, userdata, rc):
     logging.info("Connected to broker at %s as %s" % (MQTT_HOST, client_id))
 
-    mqttc.publish("/clients/" + client_id, "Online")
+    # mqttc.publish("/clients/" + client_id, "Online")
 
     map = userdata['map']
     for topic in map:
@@ -186,7 +186,7 @@ if __name__ == '__main__':
     mqttc.on_disconnect = on_disconnect
     mqttc.on_subscribe = on_subscribe
 
-    mqttc.will_set("clients/" + client_id, payload="Adios!", qos=0, retain=False)
+    # mqttc.will_set("clients/" + client_id, payload="Adios!", qos=0, retain=False)
 
     mqttc.connect(MQTT_HOST, 1883, 60)
 
