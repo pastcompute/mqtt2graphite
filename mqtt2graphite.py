@@ -14,8 +14,9 @@ import signal
 import csv
 
 MQTT_HOST = os.environ.get('MQTT_HOST', 'localhost')
-CARBON_SERVER = '127.0.0.1'
-CARBON_PORT = 2003
+MQTT_PORT = os.environ.get('MQTT_PORT', '1883')
+CARBON_SERVER = os.environ.get('CARBON_SERVER', '127.0.0.1')
+CARBON_PORT = int(os.environ.get('CARBON_PORT', '2003'))
 
 LOGFORMAT = '%(asctime)-15s %(message)s'
 
@@ -193,7 +194,7 @@ if __name__ == '__main__':
 
     # mqttc.will_set("clients/" + client_id, payload="Adios!", qos=0, retain=False)
 
-    mqttc.connect(MQTT_HOST, 1883, 60)
+    mqttc.connect(MQTT_HOST, MQTT_PORT, 60)
 
     signal.signal(signal.SIGTERM, cleanup)
     signal.signal(signal.SIGINT, cleanup)
