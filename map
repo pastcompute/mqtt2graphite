@@ -16,8 +16,8 @@
 #	this value is not specified, the MQTT topic name will be used,
 #	with slashes (/) converted to dots (.)
 
-n	test/mosquitto/messages/load/received
-n	test/mosquitto/messages/load/#
+#n	test/mosquitto/messages/load/received
+#n	test/mosquitto/messages/load/#
 n       test/mosquitto/sysadmin-demo
 
 n	test/jp/j1
