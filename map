@@ -18,6 +18,7 @@
 
 n	test/mosquitto/messages/load/received
 n	test/mosquitto/messages/load/#
+n       test/mosquitto/sysadmin-demo
 
 n	test/jp/j1
 

@@ -1,0 +1,1 @@
+while true ; do for (( x=0 ; x < 6; x=$((x+1)) )) ; do mosquitto_pub -t test/mosquitto/sysadmin-demo -m $x ; sleep 5 ; done ; done
